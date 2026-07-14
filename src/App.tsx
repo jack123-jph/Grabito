@@ -78,6 +78,14 @@ import {
 } from './translations';
 import { FranchiseInquiry } from './types';
 
+const PLAY_STORE_LINK = "https://play.google.com/store/apps/details?id=com.grabitoapp.com&pcampaignid=web_share";
+
+const GooglePlayIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg viewBox="0 0 512 512" fill="currentColor" className={className}>
+    <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58-33.4-60.7 60.7 60.8 60.8 57.9-33.4c15-8.6 25-24.7 25-42.3s-10-33.7-25-42.4zm-146.6 52l60.1 60.1L104.6 499l220.9-221.4z" />
+  </svg>
+);
+
 export default function App() {
   // Localization state (synced with localStorage)
   const [lang, setLang] = useState<'en' | 'kn'>(() => {
@@ -161,6 +169,7 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
+  const [hideFloatingBtn, setHideFloatingBtn] = useState(false);
 
   // Active FAQ index
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq-shop');
@@ -177,6 +186,16 @@ export default function App() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
+
+      // Hide floating button when the user scrolls near/into the inquiry form
+      const formEl = document.getElementById('franchise-inquiry-form');
+      if (formEl) {
+        const rect = formEl.getBoundingClientRect();
+        // Hide if the top of the form is within the viewport or scrolled past
+        setHideFloatingBtn(rect.top < window.innerHeight - 80);
+      } else {
+        setHideFloatingBtn(false);
+      }
 
       // Section tracker
       const sections = ['home', 'services', 'benefits', 'pricing', 'faq', 'contact'];
@@ -641,6 +660,37 @@ export default function App() {
                   <MessageCircle className="w-5 h-5 text-[#25D366] fill-[#25D366]" />
                   {lang === 'kn' ? 'ವಾಟ್ಸಾಪ್ ಮಾಡಿ' : 'WhatsApp Now'}
                 </a>
+              </div>
+
+              {/* Google Play Download Card */}
+              <div className="mt-8 p-6 bg-[#FFF8F3] border border-orange-200/60 rounded-2xl max-w-xl animate-[fadeIn_0.4s_ease-out] relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-orange-500/5 rounded-full filter blur-xl pointer-events-none" />
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="space-y-1.5 flex-1">
+                    <h4 className="font-display font-bold text-gray-900 text-sm flex items-center gap-2">
+                      <span className="p-1 bg-[#FF6B00]/10 rounded-lg text-[#FF6B00]">
+                        <GooglePlayIcon className="w-4 h-4 fill-current" />
+                      </span>
+                      {lang === 'kn' ? 'ಗ್ರಾಬಿಟೊ ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ' : 'Download the Grabito App'}
+                    </h4>
+                    <p className="text-xs text-gray-500 leading-relaxed font-medium">
+                      {lang === 'kn' ? 'ನಿಮ್ಮ ಹತ್ತಿರದ ಸ್ಥಳೀಯ ಅಂಗಡಿಗಳಿಂದ ಆಹಾರ, ದಿನಸಿ, ಔಷಧಗಳು, ಪಾರ್ಸೆಲ್‌ಗಳು ಮತ್ತು ಹೆಚ್ಚಿನದನ್ನು ಆರ್ಡರ್ ಮಾಡಿ.' : 'Order food, groceries, medicines, parcels and more from your nearest local stores.'}
+                    </p>
+                  </div>
+                  
+                  <a
+                    href={PLAY_STORE_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-black hover:bg-gray-900 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition-all flex items-center gap-2 shadow-md hover:scale-[1.02] transform active:scale-95 shrink-0"
+                  >
+                    <GooglePlayIcon className="w-4 h-4 text-white fill-current" />
+                    <div className="text-left font-sans">
+                      <p className="text-[9px] font-medium text-gray-400 leading-none">GET IT ON</p>
+                      <p className="text-[11px] font-bold leading-tight">Google Play</p>
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -1474,16 +1524,16 @@ export default function App() {
           
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
             
-            {/* Logo and Slogan Column (4 cols) */}
-            <div className="md:col-span-4 space-y-4">
+            {/* Logo and Slogan Column (3 cols) */}
+            <div className="md:col-span-3 space-y-4">
               <Logo theme="light" showSlogan={true} lang={lang} />
               <p className="text-xs text-gray-500 leading-relaxed max-w-sm">
                 {lang === 'kn' ? 'ಕರ್ನಾಟಕದ ಸ್ವದೇಶಿ ಹೈಪರ್‌ಲೋಕಲ್ ಮಲ್ಟಿ-ಕ್ಯಾಟಗರಿ ಡೆಲಿವರಿ ನೆಟ್‌ವರ್ಕ್. ಆಧುನಿಕ ಸಾಫ್ಟ್‌ವೇರ್ ತಂತ್ರಜ್ಞಾನದ ಮೂಲಕ ಪಟ್ಟಣಗಳನ್ನು ಮತ್ತು ಸ್ಥಳೀಯ ಉದ್ಯಮಿಗಳನ್ನು ಸಬಲೀಕರಣಗೊಳಿಸುತ್ತಿದೆ.' : 'Karnataka\'s homegrown hyperlocal multi-category delivery network. Empowering towns and local entrepreneurs through modern SaaS technology.'}
               </p>
             </div>
 
-            {/* Quick Links Column (4 cols) */}
-            <div className="md:col-span-4 grid grid-cols-2 gap-4">
+            {/* Quick Links Column (3 cols) */}
+            <div className="md:col-span-3 grid grid-cols-2 gap-4">
               <div>
                 <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider font-mono mb-3.5">
                   {lang === 'kn' ? 'ನ್ಯಾವಿಗೇಷನ್' : 'Navigation'}
@@ -1528,8 +1578,8 @@ export default function App() {
               </div>
             </div>
 
-            {/* Support Owner Contact Column (4 cols) */}
-            <div className="md:col-span-4 space-y-4">
+            {/* Support Owner Contact Column (3 cols) */}
+            <div className="md:col-span-3 space-y-4">
               <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider font-mono">
                 {lang === 'kn' ? 'ಸಂಪರ್ಕಿಸಿ' : 'Get In Touch'}
               </h5>
@@ -1576,6 +1626,45 @@ export default function App() {
               </div>
             </div>
 
+            {/* Download Our App Column (3 cols) */}
+            <div className="md:col-span-3 space-y-4">
+              <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider font-mono">
+                {lang === 'kn' ? 'ನಮ್ಮ ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ' : 'Download Our App'}
+              </h5>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                {lang === 'kn' 
+                  ? 'ನಿಮ್ಮ ಸ್ಮಾರ್ಟ್‌ಫೋನ್‌ನಲ್ಲಿ ಸುಲಭವಾಗಿ ಮತ್ತು ವೇಗವಾಗಿ ಆರ್ಡರ್ ಮಾಡಲು ಗ್ರಾಬಿಟೊ ಆ್ಯಪ್ ಅನ್ನು ಪ್ಲೇ ಸ್ಟೋರ್‌ನಿಂದ ಈಗಲೇ ಪಡೆಯಿರಿ.' 
+                  : 'Experience seamless local ordering and track deliveries in real-time.'}
+              </p>
+              
+              <div className="flex flex-col gap-2 pt-1">
+                {/* Download App Button */}
+                <a
+                  href={PLAY_STORE_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#FF6B00] hover:bg-[#E05E00] text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-xs hover:shadow-md cursor-pointer font-display"
+                >
+                  <GooglePlayIcon className="w-3.5 h-3.5 fill-white" />
+                  <span>📱 {lang === 'kn' ? 'ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ' : 'Download App'}</span>
+                </a>
+
+                {/* Google Play badge button */}
+                <a
+                  href={PLAY_STORE_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-black hover:bg-gray-900 text-white font-semibold text-xs px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2.5 shadow-xs border border-gray-800"
+                >
+                  <GooglePlayIcon className="w-4 h-4 text-white fill-current" />
+                  <div className="text-left font-sans">
+                    <p className="text-[8px] font-medium text-gray-400 leading-none">GET IT ON</p>
+                    <p className="text-[10px] font-bold leading-tight">Google Play</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
           </div>
 
           {/* Copyright Line */}
@@ -1603,6 +1692,19 @@ export default function App() {
 
 
       {/* 18. FLOATING QUICK-ACTION BUTTONS */}
+      {/* Floating Apply Franchise Button on Mobile */}
+      <div className={`fixed bottom-24 left-1/2 transform -translate-x-1/2 z-40 lg:hidden transition-all duration-300 ${
+        scrolled && !hideFloatingBtn ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-90 pointer-events-none'
+      }`}>
+        <a
+          href="#franchise-inquiry-form"
+          className="bg-[#FF6B00] hover:bg-[#E05E00] text-white font-bold text-xs px-6 py-3.5 rounded-full shadow-2xl flex items-center gap-2 border border-white/20 whitespace-nowrap uppercase tracking-wider"
+        >
+          <span className="text-sm">✍</span>
+          <span>{lang === 'kn' ? 'ಫ್ರಾಂಚೈಸ್‌ಗಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ' : 'Apply Franchise'}</span>
+        </a>
+      </div>
+
       {/* Floating Call Button on Bottom Left */}
       <a
         href={CONTACT_INFO.callLink}

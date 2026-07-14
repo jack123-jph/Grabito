@@ -154,7 +154,7 @@ export const TRANSLATIONS: Record<'en' | 'kn', TranslationSet> = {
     
     heroHeadline: "Launch Your Own Hyperlocal Delivery Franchise for just ₹5,999!",
     heroSubheadline: "Build a dominant local delivery brand in your town. Onboard local shops, manage riders using our advanced admin dashboards, and keep 100% of your delivery commissions. No shop or experience required.",
-    heroBtnStart: "Start Your Business",
+    heroBtnStart: "Apply For Your Franchise",
     heroBtnCalc: "Estimate Earnings",
     
     statsFeeLabel: "One-Time Franchise Fee",
@@ -295,7 +295,7 @@ export const TRANSLATIONS: Record<'en' | 'kn', TranslationSet> = {
     
     heroHeadline: "ಕೇವಲ ₹೫,೯೯೯ ಹೂಡಿಕೆಯಲ್ಲಿ ನಿಮ್ಮದೇ ಆದ ಹೈಪರ್‌ಲೋಕಲ್ ಡೆಲಿವರಿ ಫ್ರಾಂಚೈಸ್ ಆರಂಭಿಸಿ!",
     heroSubheadline: "ನಿಮ್ಮ ಸ್ವಂತ ಊರಿನಲ್ಲಿಯೇ ಪ್ರಬಲವಾದ ಸ್ಥಳೀಯ ಡೆಲಿವರಿ ಬ್ರ್ಯಾಂಡ್ ನಿರ್ಮಿಸಿ. ಸ್ಥಳೀಯ ಅಂಗಡಿಗಳನ್ನು ನಮ್ಮ ಪ್ಲಾಟ್‌ಫಾರ್ಮ್‌ಗೆ ಜೋಡಿಸಿ, ಅತ್ಯಾಧುನಿಕ ಅಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಮೂಲಕ ರೈಡರ್‌ಗಳನ್ನು ಸುಲಭವಾಗಿ ನಿರ್ವಹಿಸಿ ಮತ್ತು ಡೆಲಿವರಿಯಿಂದ ಬರುವ ಸಂಪೂರ್ಣ ಆದಾಯವನ್ನು ಗಳಿಸಿ. ಯಾವುದೇ ಕಚೇರಿ ಅಥವಾ ತಾಂತ್ರಿಕ ಅನುಭವದ ಅಗತ್ಯವಿಲ್ಲ.",
-    heroBtnStart: "ನಿಮ್ಮ ಸ್ವಂತ ವ್ಯವಹಾರವನ್ನು ಆರಂಭಿಸಿ",
+    heroBtnStart: "ಫ್ರಾಂಚೈಸ್‌ಗಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ",
     heroBtnCalc: "ಗಳಿಕೆಯ ಅಂದಾಜು ಲೆಕ್ಕಾಚಾರ ಮಾಡಿ",
     
     statsFeeLabel: "ಒಂದು ಬಾರಿಯ ಫ್ರಾಂಚೈಸ್ ಹೂಡಿಕೆ",

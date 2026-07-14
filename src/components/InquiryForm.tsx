@@ -24,6 +24,7 @@ export default function InquiryForm({ onSuccessSubmit, lang = 'en' }: InquiryFor
   const [isSuccess, setIsSuccess] = useState(false);
   const [latestInquiry, setLatestInquiry] = useState<FranchiseInquiry | null>(null);
   const [formError, setFormError] = useState('');
+  const [customWhatsappUrl, setCustomWhatsappUrl] = useState('');
 
   // Copy phone number to WhatsApp field automatically for quick filling
   const handleCopyPhoneToWhatsapp = () => {
@@ -75,12 +76,37 @@ export default function InquiryForm({ onSuccessSubmit, lang = 'en' }: InquiryFor
         console.error("Local storage saving error:", err);
       }
 
+      // Format WhatsApp details message
+      const formattedText = `*New Grabito Franchise Inquiry* 📱
+----------------------------------------
+*Name / ಹೆಸರು:* ${name}
+*Phone / ಫೋನ್:* ${phone}
+*WhatsApp / ವಾಟ್ಸಾಪ್:* ${whatsapp || phone}
+*Town / ಪಟ್ಟಣ:* ${town}
+*District / ಜಿಲ್ಲೆ:* ${district}
+*Background / ಹಿನ್ನೆಲೆ:* ${background}
+*Investment Ready / ಬಂಡವಾಳ ಸಿದ್ಧ:* ${investmentReady ? "Yes (₹5,999+ Ready) ✅" : "No ❌"}
+${message ? `*Additional Message / ಸಂದೇಶ:* ${message}` : ''}
+----------------------------------------
+_Submitted from Grabito Franchise Website_`;
+
+      const encodedText = encodeURIComponent(formattedText);
+      const whatsappUrl = `https://wa.me/919538755904?text=${encodedText}`;
+      setCustomWhatsappUrl(whatsappUrl);
+
       setIsSubmitting(false);
       setIsSuccess(true);
       setLatestInquiry(newInquiry);
 
       if (onSuccessSubmit) {
         onSuccessSubmit(newInquiry);
+      }
+
+      // Auto-open the WhatsApp link
+      try {
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      } catch (err) {
+        console.error("Popup blocked or failed to auto-open:", err);
       }
 
       // Reset form
@@ -129,7 +155,7 @@ export default function InquiryForm({ onSuccessSubmit, lang = 'en' }: InquiryFor
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
             <a
-              href={CONTACT_INFO.whatsappLink}
+              href={customWhatsappUrl || CONTACT_INFO.whatsappLink}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1EBE57] text-white font-semibold px-6 py-3.5 rounded-xl transition-all shadow-md hover:shadow-lg text-sm"
