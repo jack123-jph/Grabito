@@ -1,0 +1,6 @@
+{
+  "name": "Grabito Franchise",
+  "description": "Premium landing page for Grabito Franchise - an all-in-one hyperlocal delivery platform built for towns across Karnataka.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
